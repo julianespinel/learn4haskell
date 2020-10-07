@@ -545,12 +545,12 @@ value after "=" where the condition is true.
 Casual reminder about adding top-level type signatures for all functions :)
 -}
 
-sortSortedLists :: [Int] -> [Int] -> [Int]
-sortSortedLists xs [] = xs
-sortSortedLists [] ys = ys
-sortSortedLists (x:xs) (y:ys)
-  | x <= y    = x : sortSortedLists xs (y:ys)
-  | otherwise = y : sortSortedLists (x:xs) ys
+mergeSorted :: [Int] -> [Int] -> [Int]
+mergeSorted xs [] = xs
+mergeSorted [] ys = ys
+mergeSorted (x:xs) (y:ys)
+  | x <= y    = x : mergeSorted xs (y:ys)
+  | otherwise = y : mergeSorted (x:xs) ys
 
 
 mergeSort :: [Int] -> [Int]
@@ -560,7 +560,7 @@ mergeSort (x:y:[]) = min x y : max x y : []
 mergeSort xs = do
   let sortedFirstHalf = mergeSort (fst halves)
   let sortedSecondHalf = mergeSort (snd halves)
-  sortSortedLists sortedFirstHalf sortedSecondHalf
+  mergeSorted sortedFirstHalf sortedSecondHalf
     where halves = splitAt (length xs `div` 2) xs
 
 
